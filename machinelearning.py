@@ -27,6 +27,20 @@ def forward_propagation(X, parameters):
     return A, cache
 
 
+def compute_cost(A, Y):
+    #A(Bilder, probabilitys)  bsp.[20,3,4,36,20,9,...,n]
+    #Y Tatsächlichen Werte   
+    #Sparse Categorical Cross-Entropy   
+
+    n = A.shape[0]
+
+    actual_props = A[np.arange(n), Y]
+    cost = np.mean(- np.sum( np.log(actual_props)))
+
+    return cost
+    
+
+
 ##RESTULTS HANDLING
 
 def comp_class_prediction(A):

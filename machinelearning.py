@@ -1,24 +1,36 @@
 import numpy as np
 import helperfunctions as hf
 
-
+##DATA HANDLING-----------------------------------------------------------------
 def forward_propagation(X, parameters):
 
-    
-    #Extrahierung aus parameters obj ( bisther 1 h_layer)
-    W1 = parameters["W1"]   #(h_n, h_x)
-    b1 = parameters["b1"]   #(1, h_n)
+    A = X
+    cache = {"A0": X}
 
-    W2 = parameters["W2"]   #(y_n, h_n)
-    b2 = parameters["b2"]   #(1, y_n)
+    number_of_layers = int(len(parameters) / 2)
 
-    #X ist der Datensatz shape == (Bilder = n , Features = 6912 = h_x)
-    Z1 = np.dot(W1, X.T) + b1  #(n, h_n)
-    #Activation Funktion 1 (ReLu?)
-    A1 =                #(n, h_n)
+    for i in range(1, number_of_layers + 1):
 
-    Z2 = np.dot(W2, A1.T) + b2
-    A2 = hf.sigmoid(Z2)
+        W = parameters[f"W{i}"]
+        b = parameters[f"b{i}"]
+
+        Z = np.dot(A, W.T) + b
+
+        if i == number_of_layers:
+            A = hf.softmax(Z)
+        else:
+            A = hf.reLu(Z)
+
+        cache[f"Z{i}"] = Z
+        cache[f"A{i}"] = A
+
+    return A, cache
 
 
-    return A2
+##RESTULTS HANDLING
+
+def comp_class_prediction(A):
+    #A(Bild, porbabilty)
+    prediction = np.argmax(A, axis=1, keepdims= True)
+
+

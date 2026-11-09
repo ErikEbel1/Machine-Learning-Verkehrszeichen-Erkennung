@@ -19,13 +19,14 @@ test_data_flatten = test_data_flatten / 255
 hyper_parameters = load_hyperparameters(test_data_flatten)
 
 n_x = hyper_parameters["input_layer_size"]
-n_h = hyper_parameters["hidden_layer_size"]
+n_h1 = hyper_parameters["hidden_layer_size"]
 n_y = hyper_parameters["output_layer_size"]
+#     zum hinzufügen von weiteren hidden layers
 
 parameters = {
-    "W1": np.random.randn(n_h, n_x) * 0.01,
-    "b1": np.zeros((1,n_h)),
-    "W2": np.random.randn(n_y, n_h ) * 0.01,
+    "W1": np.random.randn(n_h1, n_x) * 0.01,
+    "b1": np.zeros((1,n_h1)),
+    "W2": np.random.randn(n_y, n_h1 ) * 0.01,
     "b2": np.zeros((1, n_y))
 }
 
